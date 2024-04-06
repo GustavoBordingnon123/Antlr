@@ -1,29 +1,25 @@
+Estou desenvolvendo uma aplicão em typescript, para um interpretado de expressões matematicam em antlr
+
+Atualmente tenho esse runner ts: 
+
+// Developed by: Bruno Sonvezzo, Elvis Claudino, Felipe Pires, Gabriel Fasolim
+
 import { CharStreams, CommonTokenStream } from "antlr4ts";
 import { RPNCalculatorParser } from "./generated/RPNCalculatorParser";
 import { RPNCalculatorLexer } from "./generated/RPNCalculatorLexer";
 import * as fs from "fs";
-import PDFDocument from "pdfkit";
 
-function printParseTreeDetailedPdf(doc: any, tree: any, depth: number = 0, parentIndent: string = "") {
-    const indent = "    ".repeat(depth);
-    const currentIndent = parentIndent + indent;
-    if (tree.children) {
-        doc.text(`${currentIndent}${tree.constructor.name}:`);
-        for (let i = 0; i < tree.children.length; i++) {
-            const isLast = i === tree.children.length - 1;
-            const child = tree.children[i];
-            const childIndent = isLast ? "└── " : "├── ";
-            if (child.children && child.children.length > 0) {
-                doc.text(`${currentIndent}${childIndent}${child.constructor.name}:`);
-                printParseTreeDetailedPdf(doc, child, depth + 1, currentIndent + (isLast ? "    " : "│   "));
-            } else {
-                doc.text(`${currentIndent}${childIndent}${child.constructor.name}: ${child.text}`);
-            }
-        }
-    } else {
-        doc.text(`${currentIndent}${tree.constructor.name}: ${tree.text}`);
-    }
-}
+// function printParseTree(tree: any, depth: number = 0) {
+//     const indent = "    ".repeat(depth);
+//     if (tree.children) {
+//         console.log(`${indent}${tree.constructor.name}: ${tree.text}`);
+//         for (const child of tree.children) {
+//             printParseTree(child, depth + 1);
+//         }
+//     } else {
+//         console.log(`${indent}${tree.constructor.name}: ${tree.text}`);
+//     }
+// }
 
 function printParseTreeDetailed(tree: any, depth: number = 0, parentIndent: string = "") {
     const indent = "    ".repeat(depth);
@@ -46,6 +42,7 @@ function printParseTreeDetailed(tree: any, depth: number = 0, parentIndent: stri
     }
 }
 
+
 // Read the contents of the "EXAMPLE.txt" file
 const code = fs.readFileSync("EXAMPLE.txt", "utf8");
 
@@ -64,19 +61,10 @@ const parser = new RPNCalculatorParser(tokenStream);
 // Parse the input and generate the parse tree
 const tree = parser.file();
 
-// Create a new PDF document
-const doc = new PDFDocument();
-doc.pipe(fs.createWriteStream('parse_tree.pdf'));
-
-// Reduce font size for smaller text
-doc.fontSize(6);
-
-// Print the parse tree to the PDF
-printParseTreeDetailedPdf(doc, tree);
-
-// Finalize the PDF document
-doc.end();
-
-console.log("PDF gerado com sucesso");
-
+// Print the parse tree
 printParseTreeDetailed(tree);
+
+
+Gostaria de fazer uma modificação, invés de fazer o "printParseTreeDetailed(tree);" no console.log, gostaria de gerar um pdf com esses prints, isso é possivel? 
+
+se for possivel, poderia me ajudar a fazer isso? 
