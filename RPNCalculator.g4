@@ -1,4 +1,4 @@
-// Developed by: Bruno Sonvezzo, Elvis Claudino, Felipe Pires, Gabriel Fasolim
+// Developed by: Gustavo Bordignon, Caua brito, Carlos eduardo
 grammar RPNCalculator;
 
 // Parser

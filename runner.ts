@@ -79,4 +79,6 @@ doc.end();
 
 console.log("PDF gerado com sucesso");
 
+
+
 printParseTreeDetailed(tree);
